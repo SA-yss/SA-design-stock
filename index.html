@@ -1940,7 +1940,6 @@ body{
     <div id="app"></div>
   </div>
 
-  <button class="fab" id="fabAddItem" type="button">품목 추가</button>
 
   <nav class="bottomNav" aria-label="하단 탐색">
     <button class="bottomNavBtn" id="navBack" type="button" aria-label="뒤로가기">
@@ -2313,7 +2312,6 @@ const navReload = document.getElementById("navReload");
     const topbar = document.getElementById("topbar");
     const topTitle = document.getElementById("topTitle");
 
-    const fabAddItem = document.getElementById("fabAddItem");
     const itemModal = document.getElementById("itemModal");
     const itemOverlay = document.getElementById("itemOverlay");
     const itemClose = document.getElementById("itemClose");
@@ -3117,7 +3115,6 @@ const navReload = document.getElementById("navReload");
       document.body.classList.remove("mode-request", "mode-list", "mode-admin");
       document.body.classList.add("auth-page");
       document.documentElement.classList.add("auth-page");
-      if(fabAddItem) fabAddItem.style.display = "none";
 
       const hideHeader = ["#/signup", "#/find-id", "#/reset-password"].includes(location.hash);
 
@@ -3356,7 +3353,6 @@ const navReload = document.getElementById("navReload");
       if(topbarLogo) topbarLogo.classList.remove("show");
       document.body.classList.remove("mode-request", "mode-list", "mode-admin", "auth-page");
       document.documentElement.classList.remove("auth-page");
-      if(fabAddItem) fabAddItem.style.display = "none";
 
       const isAdmin = await isAdminUser();
 
@@ -3530,9 +3526,6 @@ const navReload = document.getElementById("navReload");
         sectionAddItemBtn.addEventListener("click", ()=> openItemModal(""));
       }
 
-      if(fabAddItem){
-        fabAddItem.style.display = (mode === "admin" || mode === "list") ? "none" : "";
-      }
 
       app.querySelectorAll("[data-open]").forEach(el => {
         if(mode === "list") return;
@@ -3761,7 +3754,6 @@ const navReload = document.getElementById("navReload");
                   <p class="boxTitle">입출고 내역</p>
                   ${isAdmin ? `
                     <div class="logActionBtns">
-                      
                       <button class="selDelBtn" id="bulkDeleteLogs" type="button">삭제</button>
                     </div>
                   ` : ``}
@@ -3871,7 +3863,6 @@ const navReload = document.getElementById("navReload");
         const logDateFilterEl = app.querySelector("#logDateFilter");
         const logTypeSel = app.querySelector("#logTypeSel");
         const logDeptSel = app.querySelector("#logDeptSel");
-        const openAdd = app.querySelector("#openAdd");
         const openRequestBtn = app.querySelector("#openRequestBtn");
         const addModal = app.querySelector("#addModal");
         const addOverlay = app.querySelector("#addOverlay");
@@ -4129,7 +4120,6 @@ const navReload = document.getElementById("navReload");
           document.body.style.overflow = "";
         }
 
-        if(openAdd) openAdd.addEventListener("click", openAddModal);
         if(openRequestBtn) openRequestBtn.addEventListener("click", openAddModal);
         addOverlay.addEventListener("click", closeAddModal);
         addClose.addEventListener("click", closeAddModal);
@@ -4229,9 +4219,6 @@ const navReload = document.getElementById("navReload");
         || hash === "#/list"
         || /^#\/list\//.test(hash);
 
-      if(fabAddItem){
-        fabAddItem.style.display = hideFab ? "none" : "";
-      }
     }
 
     async function router(){
@@ -4314,7 +4301,6 @@ const navReload = document.getElementById("navReload");
       input.value = (input.value || "").trim();
     }
 
-    fabAddItem.addEventListener("click", ()=> openItemModal(""));
     itemOverlay.addEventListener("click", closeItemModal);
     itemClose.addEventListener("click", closeItemModal);
 
