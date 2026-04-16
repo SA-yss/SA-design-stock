@@ -3133,7 +3133,7 @@ function calcStock(it){
       document.body.classList.add("auth-page");
       document.documentElement.classList.add("auth-page");
 
-      const hideHeader = ["#/signup", "#/find-id", "#/reset-password"].includes(location.hash);
+      const hideHeader = ["#/signup","#/reset-password"].includes(location.hash);
 
       app.innerHTML = `
         <div class="loginScreen">
@@ -3189,8 +3189,6 @@ function calcStock(it){
 
           <div class="loginSubLinks">
             <a href="#/signup">회원가입</a>
-            <span>|</span>
-            <a href="#/find-id">아이디 찾기</a>
             <span>|</span>
             <a href="#/reset-password">비밀번호 찾기</a>
           </div>
@@ -3292,35 +3290,7 @@ function calcStock(it){
       attachAuthEnter(["signupEmail", "signupPassword", "signupPasswordConfirm"], submitSignup);
     }
 
-    function renderFindIdPage(){
-      renderAuthShell(`
-        <div class="loginForm findIdForm">
-          <h2 class="authPageTitle">아이디 찾기</h2>
-          <p class="authPageDesc">아이디는 서울옥션 이메일을 사용해 주세요.</p>
-
-        
-
-          <input id="findIdLocalPart" class="loginInput" type="text" placeholder="이메일 주소를 입력해 주세요." autocomplete="off" />
-          <button class="loginBtn" id="findIdBtn" type="button">아이디 확인</button>
-          <button class="authSecondaryBtn" id="findIdBackBtn" type="button">로그인으로 이동</button>
-          <div class="loginErrorText" id="homeLoginError"></div>
-        </div>
-      `);
-
-      function submitFindId(){
-        const localPart = getAuthInputValue("findIdLocalPart");
-        if(!localPart){
-          setAuthError("이메일 주소를 입력해주세요.");
-          return;
-        }
-
-        setAuthError(`확인된 아이디\n${localPart}`);
-      }
-
-      document.getElementById("findIdBtn").addEventListener("click", submitFindId);
-      document.getElementById("findIdBackBtn").addEventListener("click", ()=>{ location.hash = "#/login"; });
-      attachAuthEnter(["findIdLocalPart"], submitFindId);
-    }
+    
 
     function renderResetPasswordPage(){
   renderAuthShell(`
@@ -4266,7 +4236,7 @@ function calcStock(it){
       await updateFabVisibility();
 
       const hash = location.hash || "#/login";
-      const isPublicAuthPage = ["#/login", "#/signup", "#/find-id", "#/reset-password"].includes(hash);
+      const isPublicAuthPage = ["#/login", "#/signup", "#/reset-password"].includes(hash);
 
       if(!isHomeLoggedIn() && !isPublicAuthPage){
         location.hash = "#/login";
@@ -4281,8 +4251,6 @@ function calcStock(it){
         renderLoginPage();
       }else if(hash === "#/signup"){
         renderSignupPage();
-      }else if(hash === "#/find-id"){
-        renderFindIdPage();
       }else if(hash === "#/reset-password"){
         renderResetPasswordPage();
       }else if(hash === "#/" || hash === ""){
