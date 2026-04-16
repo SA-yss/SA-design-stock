@@ -3349,6 +3349,11 @@ function calcStock(it){
       setAuthError("시스템 연결을 확인해주세요.");
       return;
     }
+    
+    console.log("[reset] 최종 전송값", {
+  email,
+  new_password: newPassword
+});
 
     try{
       console.log("[reset] invoke 시작");
