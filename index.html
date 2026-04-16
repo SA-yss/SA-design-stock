@@ -3363,20 +3363,31 @@ function calcStock(it){
       console.log("[reset] invoke 응답", { data, error });
 
       if(error){
-        console.error("[reset] 함수 호출 실패:", error);
-        setAuthError(error.message || "함수 호출에 실패했습니다.");
-        return;
-      }
+  console.error("[reset] 함수 호출 실패:", error);
+  console.error("[reset] error context:", {
+    message: error?.message,
+    name: error?.name,
+    status: error?.context?.status,
+    statusText: error?.context?.statusText
+  });
 
-      if(!data?.success){
-        console.error("[reset] 함수 응답 오류:", data);
-        setAuthError(
-          data?.detail
-            ? `${data.message} (${data.detail})`
-            : (data?.message || "비밀번호 재설정에 실패했습니다.")
-        );
-        return;
-      }
+  setAuthError(
+    error?.context?.status
+      ? `오류 ${error.context.status}: ${error.message || "함수 호출 실패"}`
+      : (error.message || "함수 호출에 실패했습니다.")
+  );
+  return;
+}
+
+if(!data?.success){
+  console.error("[reset] 함수 응답 오류:", data);
+  setAuthError(
+    data?.detail
+      ? `${data.message} (${data.detail})`
+      : (data?.message || "비밀번호 재설정에 실패했습니다.")
+  );
+  return;
+}
 
       setAuthError("비밀번호가 재설정되었습니다.");
       setTimeout(() => {
