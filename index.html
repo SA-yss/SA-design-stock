@@ -3323,47 +3323,71 @@ function calcStock(it){
     }
 
     function renderResetPasswordPage(){
-      renderAuthShell(`
-        <div class="loginForm resetPwForm">
-          <h2 class="authPageTitle">비밀번호 찾기</h2>
-          <p class="authPageDesc">이메일로 비밀번호 재설정 링크를 보내드립니다.</p>
+  renderAuthShell(`
+    <div class="loginForm resetPwForm">
+      <h2 class="authPageTitle">비밀번호 재설정하기</h2>
+      <p class="authPageDesc">아이디와 새 비밀번호를 입력해주세요.</p>
 
-          <input id="resetPasswordEmail" class="loginInput" type="email" placeholder="이메일을 입력해 주세요." autocomplete="email" />
-          <button class="loginBtn" id="resetPasswordBtn" type="button">메일 보내기</button>
-          <button class="authSecondaryBtn" id="resetPasswordBackBtn" type="button">로그인으로 이동</button>
-          <div class="loginErrorText" id="homeLoginError"></div>
-        </div>
-      `);
+      <input id="resetEmail" class="loginInput" type="email" placeholder="아이디(이메일)" autocomplete="username" />
+      <input id="newPassword" class="loginInput" type="password" placeholder="비밀번호" autocomplete="new-password" />
+      <input id="newPasswordConfirm" class="loginInput" type="password" placeholder="비밀번호 재확인" autocomplete="new-password" />
 
-      async function submitResetPassword(){
-        const email = getAuthInputValue("resetPasswordEmail").toLowerCase();
+      <button class="loginBtn" id="resetPasswordBtn" type="button">재설정하기</button>
+      <button class="authSecondaryBtn" id="resetPasswordBackBtn" type="button">로그인으로 이동</button>
+      <div class="loginErrorText" id="homeLoginError"></div>
+    </div>
+  `);
 
-        if(!email){
-          setAuthError("이메일을 입력해주세요.");
-          return;
-        }
+  async function submitResetPassword(){
+    const email = getAuthInputValue("resetEmail");
+    const newPassword = getAuthInputValue("newPassword");
+    const newPasswordConfirm = getAuthInputValue("newPasswordConfirm");
 
-        if(!supabaseClient){
-          setAuthError("비밀번호 재설정 요청에 실패했습니다. 다시 시도해주세요.");
-          return;
-        }
-
-        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}${window.location.pathname}#/login`
-        });
-
-        if(error){
-          setAuthError(error.message || "재설정 메일 발송에 실패했습니다.");
-          return;
-        }
-
-        setAuthError("비밀번호 재설정 메일을 발송했습니다.\n이메일을 확인해주세요.");
-      }
-
-      document.getElementById("resetPasswordBtn").addEventListener("click", submitResetPassword);
-      document.getElementById("resetPasswordBackBtn").addEventListener("click", ()=>{ location.hash = "#/login"; });
-      attachAuthEnter(["resetPasswordEmail"], submitResetPassword);
+    if(!email || !newPassword || !newPasswordConfirm){
+      setAuthError("모든 항목을 입력해주세요.");
+      return;
     }
+
+    if(newPassword !== newPasswordConfirm){
+      setAuthError("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    if(newPassword.length < 6){
+      setAuthError("비밀번호는 6자 이상 입력해주세요.");
+      return;
+    }
+
+    if(!supabaseClient){
+      setAuthError("시스템 연결을 확인해주세요.");
+      return;
+    }
+
+    // 관리자 권한 서버 함수 호출 방식
+    const { error } = await supabaseClient.rpc("reset_user_password_by_email", {
+      p_email: email,
+      p_new_password: newPassword
+    });
+
+    if(error){
+      console.error(error);
+      setAuthError("비밀번호 재설정에 실패했습니다.");
+      return;
+    }
+
+    setAuthError("비밀번호가 재설정되었습니다.");
+    setTimeout(() => {
+      location.hash = "#/login";
+    }, 1000);
+  }
+
+  document.getElementById("resetPasswordBtn").addEventListener("click", submitResetPassword);
+  document.getElementById("resetPasswordBackBtn").addEventListener("click", ()=>{
+    location.hash = "#/login";
+  });
+
+  attachAuthEnter(["resetEmail", "newPassword", "newPasswordConfirm"], submitResetPassword);
+}
 
     async function renderMainHome(){
       topbar.style.display = "none";
