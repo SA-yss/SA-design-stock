@@ -2116,22 +2116,30 @@ body{
     }
 
     function initSupabase(){
-      try{
-        if(window.supabase && typeof window.supabase.createClient === "function"){
-          supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-          DB.mode = "connected";
-          DB.lastError = "";
-          return true;
-        }
-      }catch(e){
-        console.error("Supabase init 실패:", e);
-        DB.mode = "error";
-        DB.lastError = String(e?.message || e);
-      }
-      supabaseClient = null;
-      DB.mode = "local";
-      return false;
+  console.log("[boot] initSupabase 시작");
+  try{
+    console.log("[boot] window.supabase:", !!window.supabase);
+    console.log("[boot] createClient 존재:", !!(window.supabase && window.supabase.createClient));
+
+    if(window.supabase && typeof window.supabase.createClient === "function"){
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      console.log("[boot] supabaseClient 생성 완료:", !!supabaseClient);
+
+      DB.mode = "connected";
+      DB.lastError = "";
+      return true;
     }
+  }catch(e){
+    console.error("Supabase init 실패:", e);
+    DB.mode = "error";
+    DB.lastError = String(e?.message || e);
+  }
+
+  console.warn("[boot] supabaseClient 생성 실패");
+  supabaseClient = null;
+  DB.mode = "local";
+  return false;
+}
 
     function dbReady(){ return !!supabaseClient; }
 
@@ -3309,9 +3317,17 @@ function calcStock(it){
   `);
 
   async function submitResetPassword(){
+    console.log("[reset] 버튼 클릭됨");
+
     const email = getAuthInputValue("resetEmail").toLowerCase();
     const newPassword = getAuthInputValue("newPassword");
     const newPasswordConfirm = getAuthInputValue("newPasswordConfirm");
+
+    console.log("[reset] 입력값 확인", {
+      email,
+      hasPassword: !!newPassword,
+      hasConfirm: !!newPasswordConfirm
+    });
 
     if(!email || !newPassword || !newPasswordConfirm){
       setAuthError("모든 항목을 입력해주세요.");
@@ -3329,32 +3345,48 @@ function calcStock(it){
     }
 
     if(!supabaseClient){
+      console.error("[reset] supabaseClient 없음");
       setAuthError("시스템 연결을 확인해주세요.");
       return;
     }
 
-    const { data, error } = await supabaseClient.functions.invoke("admin-reset-password", {
-      body: {
-        email,
-        new_password: newPassword
+    try{
+      console.log("[reset] invoke 시작");
+
+      const { data, error } = await supabaseClient.functions.invoke("admin-reset-password", {
+        body: {
+          email,
+          new_password: newPassword
+        }
+      });
+
+      console.log("[reset] invoke 응답", { data, error });
+
+      if(error){
+        console.error("[reset] 함수 호출 실패:", error);
+        setAuthError(error.message || "함수 호출에 실패했습니다.");
+        return;
       }
-    });
 
-    if(error){
-      console.error("비밀번호 재설정 호출 실패:", error);
-      setAuthError(error.message || "비밀번호 재설정에 실패하였습니다.");
-      return;
+      if(!data?.success){
+        console.error("[reset] 함수 응답 오류:", data);
+        setAuthError(
+          data?.detail
+            ? `${data.message} (${data.detail})`
+            : (data?.message || "비밀번호 재설정에 실패했습니다.")
+        );
+        return;
+      }
+
+      setAuthError("비밀번호가 재설정되었습니다.");
+      setTimeout(() => {
+        location.hash = "#/login";
+      }, 1000);
+
+    }catch(err){
+      console.error("[reset] 예외 발생:", err);
+      setAuthError(err?.message || "비밀번호 재설정 중 오류가 발생했습니다.");
     }
-
-    if(!data?.success){
-      setAuthError(data?.message || "비밀번호 재설정에 실패하였습니다.");
-      return;
-    }
-
-    setAuthError("비밀번호가 재설정되었습니다.");
-    setTimeout(() => {
-      location.hash = "#/login";
-    }, 1000);
   }
 
   document.getElementById("resetPasswordBtn").addEventListener("click", submitResetPassword);
@@ -4456,7 +4488,8 @@ navReload?.addEventListener("click", ()=>{
     window.addEventListener("hashchange", router);
 
     (async function boot(){
-      loadAllLocal();
+  console.log("[boot] 시작");
+  loadAllLocal();
 
       if(!location.hash) location.hash = "#/login";
 
@@ -4464,10 +4497,12 @@ navReload?.addEventListener("click", ()=>{
       document.body.classList.remove("preboot");
 
       const ok = initSupabase();
-      if(!ok){
-        DB.mode = "local";
-        return;
-      }
+console.log("[boot] initSupabase 결과:", ok, "client:", supabaseClient);
+
+if(!ok){
+  DB.mode = "local";
+  return;
+}
 
       try{
         await syncHomeLoginSessionFromSupabase();
@@ -4479,7 +4514,7 @@ navReload?.addEventListener("click", ()=>{
       }
 
       supabaseClient.auth.onAuthStateChange((event, session) => {
-        setHomeLoggedIn(!!session);
+  console.log("[auth] 상태변경", event, !!session);
         const authHashes = ["#/login", "#/signup", "#/find-id", "#/reset-password"];
         if(session && authHashes.includes(location.hash || "#/login")){
           location.hash = "#/";
