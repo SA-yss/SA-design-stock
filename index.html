@@ -3353,7 +3353,7 @@ function calcStock(it){
     try{
       console.log("[reset] invoke 시작");
 
-      const { data, error } = await supabaseClient.functions.invoke("admin-reset-password", {
+      const { data, error } = await supabaseClient.functions.invoke("swift-task", {
         body: {
           email,
           new_password: newPassword
