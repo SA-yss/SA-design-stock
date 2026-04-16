@@ -708,7 +708,7 @@
 
     .detailPaperHead{
       display:grid;
-      grid-template-columns:minmax(0, 1fr) 190px;
+      grid-template-columns:minmax(0, 1fr) 170px;
       align-items:center;
       gap:0;
       min-height:62px;
@@ -731,10 +731,12 @@
       display:flex;
       align-items:center;
       padding:0 22px;
-      border-right:1px solid #e5e5e5;
+      border-right:none;
       background:#fff;
       min-width:0;
     }
+    .detailHeadMeta .detailHeroName{
+  border-right:1px solid #e5e5e5;}
 
     .detailHeadMeta .detailHeroLabel{
       display:none;
@@ -742,12 +744,12 @@
 
     .detailHeadMeta .detailHeroName{
       margin:0;
-      font-size:20px;
+      font-size:17px;
       font-weight:600;
       letter-spacing:-0.04em;
       line-height:1;
       word-break:keep-all;
-      justify-content:flex-start;
+      justify-content:center;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -1690,9 +1692,27 @@ body{
       .statValue{ font-size:22px; }
 
       .logBox{ margin:0; }
+      @media (max-width: 640px){
+  .logBox{
+    overflow-x:auto;
+    overflow-y:hidden;
+  }
+
+  .logMinWidth{
+    min-width:max-content;
+    width:max-content;
+  }
+
+  .logHead,
+  .logRow,
+  .requestTable .logHead,
+  .requestTable .logRow{
+    width:max-content;
+  }
+}
       .logHead > div, .logRow > div{ padding:0 12px; }
       .detailBrand{ font-size:20px; }
-      .detailPaperHead{ grid-template-columns:72px minmax(1fr) 100px; }
+      .detailPaperHead{ grid-template-columns:2fr 1fr; }
       .detailHeadMeta{ grid-template-columns:72px minmax(0, 1fr) 112px; }
       .detailHeadMeta > div{ min-height:46px; padding:0 12px; }
       .detailHeroName{ font-size:16px; }
@@ -2662,17 +2682,14 @@ const navReload = document.getElementById("navReload");
     }
 
     function signedQty(row){
-      const qty = Number(row.qty || 0);
-      if (!qty) return 0;
-      return row.t === "입고" ? qty : -qty;
-    }
+  const qty = Number(row.qty || 0);
+  if (!qty) return 0;
+  return row.t === "입고" ? qty : -qty;
+}
 
-    function calcStock(it){
-      ensureLogs(it);
-      const base = Number(it.baseStock || 0);
-      const sum = (it.logs || []).reduce((a, r) => a + signedQty(r), 0);
-      return base + sum;
-    }
+function calcStock(it){
+  return Number(it?.baseStock || 0);
+}
 
     function getLastLogInfo(it){
       ensureLogs(it);
