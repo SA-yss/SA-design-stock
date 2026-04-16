@@ -3359,11 +3359,14 @@ function calcStock(it){
       console.log("[reset] invoke 시작");
 
       const { data, error } = await supabaseClient.functions.invoke("swift-task", {
-        body: {
-          email,
-          new_password: newPassword
-        }
-      });
+  body: {
+    email,
+    new_password: newPassword
+  },
+  headers: {
+    Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+  }
+});
 
       console.log("[reset] invoke 응답", { data, error });
 
