@@ -1415,7 +1415,8 @@ body{
 
     #signupPasswordConfirm,
 #findIdEmail,
-#resetPasswordEmail{
+#resetEmail,
+#newPasswordConfirm{
   margin-bottom:24px;
 }
 .loginForm input:last-of-type{
@@ -3317,17 +3318,9 @@ function calcStock(it){
   `);
 
   async function submitResetPassword(){
-    console.log("[reset] 버튼 클릭됨");
-
     const email = getAuthInputValue("resetEmail").toLowerCase();
     const newPassword = getAuthInputValue("newPassword");
     const newPasswordConfirm = getAuthInputValue("newPasswordConfirm");
-
-    console.log("[reset] 입력값 확인", {
-      email,
-      hasPassword: !!newPassword,
-      hasConfirm: !!newPasswordConfirm
-    });
 
     if(!email || !newPassword || !newPasswordConfirm){
       setAuthError("모든 항목을 입력해주세요.");
@@ -3344,64 +3337,30 @@ function calcStock(it){
       return;
     }
 
-    if(!supabaseClient){
-      console.error("[reset] supabaseClient 없음");
-      setAuthError("시스템 연결을 확인해주세요.");
-      return;
-    }
-    
-    console.log("[reset] 최종 전송값", {
-  email,
-  new_password: newPassword
-});
-
     try{
-      console.log("[reset] invoke 시작");
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-reset-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-reset-secret": "여기에_RESET_PASSWORD_SECRET_값_입력"
+        },
+        body: JSON.stringify({
+          email,
+          new_password: newPassword
+        })
+      });
 
-      const { data, error } = await supabaseClient.functions.invoke("swift-task", {
-  body: {
-    email,
-    new_password: newPassword
-  },
-  headers: {
-    Authorization: `Bearer ${SUPABASE_ANON_KEY}`
-  }
-});
+      const result = await res.json().catch(() => ({}));
 
-      console.log("[reset] invoke 응답", { data, error });
-
-      if(error){
-  console.error("[reset] 함수 호출 실패:", error);
-  console.error("[reset] error context:", {
-    message: error?.message,
-    name: error?.name,
-    status: error?.context?.status,
-    statusText: error?.context?.statusText
-  });
-
-  setAuthError(
-    error?.context?.status
-      ? `오류 ${error.context.status}: ${error.message || "함수 호출 실패"}`
-      : (error.message || "함수 호출에 실패했습니다.")
-  );
-  return;
-}
-
-if(!data?.success){
-  console.error("[reset] 함수 응답 오류:", data);
-  setAuthError(
-    data?.detail
-      ? `${data.message} (${data.detail})`
-      : (data?.message || "비밀번호 재설정에 실패했습니다.")
-  );
-  return;
-}
+      if(!res.ok || !result?.success){
+        setAuthError(result?.message || "비밀번호 재설정에 실패했습니다.");
+        return;
+      }
 
       setAuthError("비밀번호가 재설정되었습니다.");
       setTimeout(() => {
         location.hash = "#/login";
       }, 1000);
-
     }catch(err){
       console.error("[reset] 예외 발생:", err);
       setAuthError(err?.message || "비밀번호 재설정 중 오류가 발생했습니다.");
