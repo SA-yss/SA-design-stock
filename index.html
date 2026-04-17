@@ -1413,10 +1413,9 @@ body{
       font-family:'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
     }
 
-   #signupPasswordConfirm,
+    #signupPasswordConfirm,
 #findIdEmail,
-#resetEmail,
-#newPasswordConfirm{
+#resetPasswordEmail{
   margin-bottom:24px;
 }
 .loginForm input:last-of-type{
@@ -3317,67 +3316,105 @@ function calcStock(it){
     </div>
   `);
 
-  <script>
-async function submitResetPassword(){
-  const email = getAuthInputValue("resetEmail").toLowerCase();
-  const newPassword = getAuthInputValue("newPassword");
-  const newPasswordConfirm = getAuthInputValue("newPasswordConfirm");
+  async function submitResetPassword(){
+    console.log("[reset] 버튼 클릭됨");
 
-  if(!email || !newPassword || !newPasswordConfirm){
-    setAuthError("모든 항목을 입력해주세요.");
-    return;
-  }
+    const email = getAuthInputValue("resetEmail").toLowerCase();
+    const newPassword = getAuthInputValue("newPassword");
+    const newPasswordConfirm = getAuthInputValue("newPasswordConfirm");
 
-  if(newPassword !== newPasswordConfirm){
-    setAuthError("비밀번호가 일치하지 않습니다.");
-    return;
-  }
+    console.log("[reset] 입력값 확인", {
+      email,
+      hasPassword: !!newPassword,
+      hasConfirm: !!newPasswordConfirm
+    });
 
-  if(newPassword.length < 6){
-    setAuthError("비밀번호는 6자 이상 입력해주세요.");
-    return;
-  }
-
-  try{
-    const res = await fetch(
-      "https://iznnctfnmeiqdjljounq.supabase.co/functions/v1/admin-reset-password",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-reset-secret": "여기에_RESET_PASSWORD_SECRET_값"
-        },
-        body: JSON.stringify({
-          email,
-          new_password: newPassword
-        })
-      }
-    );
-
-    const result = await res.json();
-
-    if(!res.ok || !result.success){
-      setAuthError(result.message || "비밀번호 재설정에 실패했습니다.");
+    if(!email || !newPassword || !newPasswordConfirm){
+      setAuthError("모든 항목을 입력해주세요.");
       return;
     }
 
-    setAuthError("비밀번호가 재설정되었습니다.");
-    setTimeout(() => {
-      location.hash = "#/login";
-    }, 1200);
+    if(newPassword !== newPasswordConfirm){
+      setAuthError("비밀번호가 일치하지 않습니다.");
+      return;
+    }
 
-  }catch(err){
-    console.error(err);
-    setAuthError("서버 연결 중 오류가 발생했습니다.");
+    if(newPassword.length < 6){
+      setAuthError("비밀번호는 6자 이상 입력해주세요.");
+      return;
+    }
+
+    if(!supabaseClient){
+      console.error("[reset] supabaseClient 없음");
+      setAuthError("시스템 연결을 확인해주세요.");
+      return;
+    }
+    
+    console.log("[reset] 최종 전송값", {
+  email,
+  new_password: newPassword
+});
+
+    try{
+      console.log("[reset] invoke 시작");
+
+      const { data, error } = await supabaseClient.functions.invoke("swift-task", {
+  body: {
+    email,
+    new_password: newPassword
+  },
+  headers: {
+    Authorization: `Bearer ${SUPABASE_ANON_KEY}`
   }
+});
+
+      console.log("[reset] invoke 응답", { data, error });
+
+      if(error){
+  console.error("[reset] 함수 호출 실패:", error);
+  console.error("[reset] error context:", {
+    message: error?.message,
+    name: error?.name,
+    status: error?.context?.status,
+    statusText: error?.context?.statusText
+  });
+
+  setAuthError(
+    error?.context?.status
+      ? `오류 ${error.context.status}: ${error.message || "함수 호출 실패"}`
+      : (error.message || "함수 호출에 실패했습니다.")
+  );
+  return;
 }
 
-document.getElementById("resetPasswordBtn").addEventListener("click", submitResetPassword);
-document.getElementById("resetPasswordBackBtn").addEventListener("click", ()=>{
-  location.hash = "#/login";
-});
-attachAuthEnter(["resetEmail", "newPassword", "newPasswordConfirm"], submitResetPassword);
-</script>
+if(!data?.success){
+  console.error("[reset] 함수 응답 오류:", data);
+  setAuthError(
+    data?.detail
+      ? `${data.message} (${data.detail})`
+      : (data?.message || "비밀번호 재설정에 실패했습니다.")
+  );
+  return;
+}
+
+      setAuthError("비밀번호가 재설정되었습니다.");
+      setTimeout(() => {
+        location.hash = "#/login";
+      }, 1000);
+
+    }catch(err){
+      console.error("[reset] 예외 발생:", err);
+      setAuthError(err?.message || "비밀번호 재설정 중 오류가 발생했습니다.");
+    }
+  }
+
+  document.getElementById("resetPasswordBtn").addEventListener("click", submitResetPassword);
+  document.getElementById("resetPasswordBackBtn").addEventListener("click", ()=>{
+    location.hash = "#/login";
+  });
+
+  attachAuthEnter(["resetEmail", "newPassword", "newPasswordConfirm"], submitResetPassword);
+}
 
     async function renderMainHome(){
       topbar.style.display = "none";
