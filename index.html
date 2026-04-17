@@ -1415,7 +1415,8 @@ body{
 
     #signupPasswordConfirm,
 #findIdEmail,
-#resetPasswordEmail{
+#resetEmail,
+#newPasswordConfirm{
   margin-bottom:24px;
 }
 .loginForm input:last-of-type{
@@ -3301,83 +3302,86 @@ function calcStock(it){
     
 
     function renderResetPasswordPage(){
-  renderAuthShell(`
-    <div class="loginForm resetPwForm">
-      <h2 class="authPageTitle">비밀번호 재설정하기</h2>
-      <p class="authPageDesc">아이디와 새 비밀번호를 입력해주세요.</p>
+      renderAuthShell(`
+        <div class="loginForm resetPwForm">
+          <h2 class="authPageTitle">비밀번호 재설정하기</h2>
+          <p class="authPageDesc">아이디와 새 비밀번호를 입력해주세요.</p>
 
-      <input id="resetEmail" class="loginInput" type="email" placeholder="아이디(이메일)" autocomplete="username" />
-      <input id="newPassword" class="loginInput" type="password" placeholder="비밀번호" autocomplete="new-password" />
-      <input id="newPasswordConfirm" class="loginInput" type="password" placeholder="비밀번호 재확인" autocomplete="new-password" />
+          <input id="resetEmail" class="loginInput" type="email" placeholder="아이디(이메일)" autocomplete="username" />
+          <input id="newPassword" class="loginInput" type="password" placeholder="비밀번호" autocomplete="new-password" />
+          <input id="newPasswordConfirm" class="loginInput" type="password" placeholder="비밀번호 재확인" autocomplete="new-password" />
 
-      <button class="loginBtn" id="resetPasswordBtn" type="button">재설정하기</button>
-      <button class="authSecondaryBtn" id="resetPasswordBackBtn" type="button">로그인으로 이동</button>
-      <div class="loginErrorText" id="homeLoginError"></div>
-    </div>
-  `);
+          <button class="loginBtn" id="resetPasswordBtn" type="button">재설정하기</button>
+          <button class="authSecondaryBtn" id="resetPasswordBackBtn" type="button">로그인으로 이동</button>
+          <div class="loginErrorText" id="homeLoginError"></div>
+        </div>
+      `);
 
-  async function submitResetPassword(){
-    const email = getAuthInputValue("resetEmail").toLowerCase();
-    const newPassword = getAuthInputValue("newPassword");
-    const newPasswordConfirm = getAuthInputValue("newPasswordConfirm");
+      async function submitResetPassword(){
+        const email = getAuthInputValue("resetEmail").toLowerCase();
+        const newPassword = getAuthInputValue("newPassword");
+        const newPasswordConfirm = getAuthInputValue("newPasswordConfirm");
 
-    if(!email || !newPassword || !newPasswordConfirm){
-      setAuthError("모든 항목을 입력해주세요.");
-      return;
+        if(!email || !newPassword || !newPasswordConfirm){
+          setAuthError("모든 항목을 입력해주세요.");
+          return;
+        }
+
+        if(newPassword !== newPasswordConfirm){
+          setAuthError("비밀번호가 일치하지 않습니다.");
+          return;
+        }
+
+        if(newPassword.length < 6){
+          setAuthError("비밀번호는 6자 이상 입력해주세요.");
+          return;
+        }
+
+        if(!supabaseClient){
+          setAuthError("시스템 연결을 확인해주세요.");
+          return;
+        }
+
+        try{
+          const { data: userData, error: userError } = await supabaseClient.auth.getUser();
+
+          if(userError || !userData?.user){
+            setAuthError("로그인된 상태에서만 비밀번호 변경이 가능합니다.");
+            return;
+          }
+
+          const loginEmail = (userData.user.email || "").toLowerCase();
+
+          if(loginEmail !== email){
+            setAuthError("현재 로그인된 계정과 입력한 이메일이 일치하지 않습니다.");
+            return;
+          }
+
+          const { error } = await supabaseClient.auth.updateUser({
+            password: newPassword
+          });
+
+          if(error){
+            setAuthError(error.message || "비밀번호 재설정에 실패했습니다.");
+            return;
+          }
+
+          setAuthError("비밀번호가 변경되었습니다.");
+          setTimeout(() => {
+            location.hash = "#/login";
+          }, 1000);
+        }catch(err){
+          setAuthError(err?.message || "비밀번호 재설정 중 오류가 발생했습니다.");
+        }
+      }
+
+      document.getElementById("resetPasswordBtn").addEventListener("click", submitResetPassword);
+      document.getElementById("resetPasswordBackBtn").addEventListener("click", ()=>{
+        location.hash = "#/login";
+      });
+
+      attachAuthEnter(["resetEmail", "newPassword", "newPasswordConfirm"], submitResetPassword);
     }
-
-    if(newPassword !== newPasswordConfirm){
-      setAuthError("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    if(newPassword.length < 6){
-      setAuthError("비밀번호는 6자 이상 입력해주세요.");
-      return;
-    }
-
-    if(!supabaseClient){
-      setAuthError("시스템 연결을 확인해주세요.");
-      return;
-    }
-
-    const { data: userData, error: userError } = await supabaseClient.auth.getUser();
-
-    if(userError || !userData?.user){
-      setAuthError("로그인된 상태에서만 비밀번호 변경이 가능합니다.");
-      return;
-    }
-
-    const loginEmail = (userData.user.email || "").toLowerCase();
-
-    if(loginEmail !== email){
-      setAuthError("현재 로그인된 계정과 입력한 이메일이 일치하지 않습니다.");
-      return;
-    }
-
-    const { error } = await supabaseClient.auth.updateUser({
-      password: newPassword
-    });
-
-    if(error){
-      setAuthError(error.message || "비밀번호 재설정에 실패했습니다.");
-      return;
-    }
-
-    setAuthError("비밀번호가 변경되었습니다.");
-    setTimeout(() => {
-      location.hash = "#/login";
-    }, 1000);
-  }
-
-  document.getElementById("resetPasswordBtn").addEventListener("click", submitResetPassword);
-  document.getElementById("resetPasswordBackBtn").addEventListener("click", ()=>{
-    location.hash = "#/login";
-  });
-
-  attachAuthEnter(["resetEmail", "newPassword", "newPasswordConfirm"], submitResetPassword);
-}
-
 
 
     async function renderMainHome(){
