@@ -3378,34 +3378,7 @@ function calcStock(it){
   attachAuthEnter(["resetEmail", "newPassword", "newPasswordConfirm"], submitResetPassword);
 }
 
-if(!data?.success){
-  console.error("[reset] 함수 응답 오류:", data);
-  setAuthError(
-    data?.detail
-      ? `${data.message} (${data.detail})`
-      : (data?.message || "비밀번호 재설정에 실패했습니다.")
-  );
-  return;
-}
 
-      setAuthError("비밀번호가 재설정되었습니다.");
-      setTimeout(() => {
-        location.hash = "#/login";
-      }, 1000);
-
-    }catch(err){
-      console.error("[reset] 예외 발생:", err);
-      setAuthError(err?.message || "비밀번호 재설정 중 오류가 발생했습니다.");
-    }
-  }
-
-  document.getElementById("resetPasswordBtn").addEventListener("click", submitResetPassword);
-  document.getElementById("resetPasswordBackBtn").addEventListener("click", ()=>{
-    location.hash = "#/login";
-  });
-
-  attachAuthEnter(["resetEmail", "newPassword", "newPasswordConfirm"], submitResetPassword);
-}
 
     async function renderMainHome(){
       topbar.style.display = "none";
