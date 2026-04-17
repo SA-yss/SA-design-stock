@@ -3338,17 +3338,20 @@ function calcStock(it){
     }
 
     try{
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-reset-password`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-reset-secret": "sa-reset-2026-abc123"
-        },
-        body: JSON.stringify({
-          email,
-          new_password: newPassword
-        })
-      });
+      const res = await fetch(
+  "https://iznnctfnmeiqdjljounq.supabase.co/functions/v1/admin-reset-password",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-reset-secret": "sa-reset-2026-abc123"
+    },
+    body: JSON.stringify({
+      email,
+      new_password: newPassword
+    })
+  }
+);
 
       const result = await res.json().catch(() => ({}));
 
