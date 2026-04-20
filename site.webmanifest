@@ -3,12 +3,12 @@
   "short_name": "창고재고관리",
   "icons": [
     {
-      "src": "./images/sa-icon-4.png?v=99",
+      "src": "images/sa-icon-4.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "./images/sa-icon-4.png?v=99",
+      "src": "images/sa-icon-4.png",
       "sizes": "512x512",
       "type": "image/png"
     }
