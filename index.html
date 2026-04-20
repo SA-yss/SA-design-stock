@@ -6,11 +6,23 @@
   <title>창고재고관리</title>
   <title>서울옥션 디자인팀 창고재고관리</title>
 
-<link rel="icon" type="image/png" sizes="32x32" href="images/sa-icon-4.png?v=4">
-<link rel="icon" type="image/png" sizes="16x16" href="images/sa-icon-4.png?v=4">
-<link rel="apple-touch-icon" sizes="180x180" href="images/sa-icon-4.png?v=4">
-<link rel="manifest" href="site.webmanifest?v=4">
+<link rel="icon" type="image/png" sizes="32x32" href="images/sa-icon-4.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/sa-icon-4.png">
+<link rel="shortcut icon" href="favicon.ico">
+
+<link rel="apple-touch-icon" href="images/sa-icon-4.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/sa-icon-4.png">
+
+<link rel="manifest" href="site.webmanifest">
+
+<meta name="application-name" content="서울옥션 디자인팀 창고재고관리">
+<meta name="apple-mobile-web-app-title" content="서울옥션 디자인팀 창고재고관리">
 <meta name="theme-color" content="#ffffff">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="manifest" href="site.webmanifest?v=1">
+
+<link rel="manifest" href="site.webmanifest?v=3">
 
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
@@ -2026,8 +2038,9 @@ body{
         </div>
 
         <div class="field">
-          <label for="nImg">이미지 경로</label>
-          <input id="nImg" placeholder="예) large-paper-bag-front.jpg 또는 images/large-paper-bag-front.jpg" />
+          <label for="nImgFile">이미지 업로드</label>
+          <input id="nImgFile" type="file" accept="image/*" />
+          <div id="nImgFileName" style="margin-top:6px; font-size:12px; color:#666;">선택된 파일 없음</div>
         </div>
       </div>
 
@@ -2355,7 +2368,13 @@ const navReload = document.getElementById("navReload");
     const nName = document.getElementById("nName");
     const nSize = document.getElementById("nSize");
     const nBase = document.getElementById("nBase");
-    const nImg = document.getElementById("nImg");
+    const nImgFile = document.getElementById("nImgFile");
+    const nImgFileName = document.getElementById("nImgFileName");
+
+    nImgFile?.addEventListener("change", () => {
+      const file = nImgFile.files?.[0];
+      nImgFileName.textContent = file ? file.name : "선택된 파일 없음";
+    });
 
     function saveAllLocal(){
       try{
@@ -2869,6 +2888,32 @@ function calcStock(it){
       DB.mode = "synced";
       DB.lastError = "";
       return true;
+    }
+
+    async function uploadItemImage(file, itemId){
+      if(!supabaseClient) throw new Error("supabaseClient not ready");
+      if(!file) return null;
+
+      const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+      const safeExt = ext.replace(/[^a-z0-9]/g, "") || "jpg";
+      const filePath = `items/${itemId}-${Date.now()}.${safeExt}`;
+
+      const { error: uploadError } = await supabaseClient
+        .storage
+        .from("warehouse-item-images")
+        .upload(filePath, file, {
+          cacheControl: "3600",
+          upsert: false
+        });
+
+      if(uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabaseClient
+        .storage
+        .from("warehouse-item-images")
+        .getPublicUrl(filePath);
+
+      return publicUrlData?.publicUrl || null;
     }
 
     async function saveItemToDB(item, categoryName){
@@ -4343,7 +4388,7 @@ function calcStock(it){
       const name = (nName.value || "").trim();
       const size = (nSize.value || "").trim();
       const base = Number(String(nBase.value || "").replace(/,/g,""));
-      const img  = (nImg.value || "").trim();
+      const imageFile = nImgFile?.files?.[0] || null;
 
       if(!category){ alert("카테고리를 입력해주세요."); return; }
       if(!name){ alert("품목명을 입력해주세요."); return; }
@@ -4359,13 +4404,25 @@ function calcStock(it){
         id = `${baseId}-${n++}`;
       }
 
+      let uploadedImageUrl = null;
+
+      if(imageFile){
+        try{
+          uploadedImageUrl = await uploadItemImage(imageFile, id);
+        }catch(err){
+          console.error(err);
+          alert("이미지 업로드에 실패했습니다.\nStorage 버킷/권한 설정을 확인해주세요.");
+          return;
+        }
+      }
+
       const newItem = {
         id,
         name,
         size,
         baseStock: base,
-        img: img || null,
-        images: [img || null, null],
+        img: uploadedImageUrl || null,
+        images: [uploadedImageUrl || null, null],
         logs: [],
         requests: []
       };
@@ -4388,7 +4445,8 @@ function calcStock(it){
       nName.value = "";
       nSize.value = "";
       nBase.value = "";
-      nImg.value = "";
+      if(nImgFile) nImgFile.value = "";
+      if(nImgFileName) nImgFileName.textContent = "선택된 파일 없음";
 
       closeItemModal();
 
