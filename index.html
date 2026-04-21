@@ -6,23 +6,18 @@
   <title>창고재고관리</title>
   <title>서울옥션 디자인팀 창고재고관리</title>
 
-<link rel="icon" type="image/png" sizes="32x32" href="images/sa-icon-4.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/sa-icon-4.png">
-<link rel="shortcut icon" href="favicon.ico">
-
-<link rel="apple-touch-icon" href="images/sa-icon-4.png">
-<link rel="apple-touch-icon" sizes="180x180" href="images/sa-icon-4.png">
-
-<link rel="manifest" href="site.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="./images/sa-icon-4.png?v=99">
+<link rel="shortcut icon" href="./images/sa-icon-4.png?v=99">
+<link rel="apple-touch-icon" sizes="180x180" href="./images/sa-icon-4.png?v=99">
+<link rel="manifest" href="./site.webmanifest?v=99">
 
 <meta name="application-name" content="서울옥션 디자인팀 창고재고관리">
 <meta name="apple-mobile-web-app-title" content="서울옥션 디자인팀 창고재고관리">
 <meta name="theme-color" content="#ffffff">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="manifest" href="site.webmanifest?v=1">
+<link rel="manifest" href="./site.webmanifest?v=1">
 
-<link rel="manifest" href="site.webmanifest?v=3">
+<link rel="manifest" href="./site.webmanifest?v=3">
 
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
@@ -69,11 +64,10 @@
       visibility:hidden;
     }
 
-    html{scroll-behavior:smooth; overflow-x:hidden}
+    html{scroll-behavior:smooth}
 
     body{
       margin:0;
-      overflow-x:hidden;
       font-family:'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
       background:var(--bg);
       color:var(--text);
@@ -217,236 +211,6 @@
     }
 
     .section{ margin-top:34px; }
-
-    /* ===== 도록 카드 메뉴 ===== */
-    .catalogMenuSection{
-      position:relative;
-      left:50%;
-      width:100vw;
-      margin-left:-50vw;
-      margin-bottom:26px;
-      padding:40px 0;
-      background:#303235;
-      overflow:hidden;
-    }
-
-    .catalogMenuSection > *{
-      width:min(calc(100% - 64px), 1040px);
-      margin:0 auto;
-    }
-
-    .catalogMenuTitle{
-      margin:0 0 16px;
-      font-size:16px;
-      font-weight:700;
-      letter-spacing:-0.03em;
-      color:#fff;
-      text-align:center;
-    }
-
-    .catalogMenuGrid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0, 1fr));
-      gap:14px;
-      min-width:0;
-      align-items:stretch;
-    }
-
-    .catalogMenuCard{
-      width:100%;
-      min-width:0;
-      min-height:118px;
-      border:1px solid #d9d9d9;
-      background:#fff;
-      padding:14px 8px 12px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      text-align:center;
-      overflow:hidden;
-    }
-
-    .catalogMenuCard.is-mint{
-      background:#bfe7e4;
-      border-color:#bfe7e4;
-    }
-
-    .catalogMenuCard.is-dark{
-      background:#5a5a5a;
-      border-color:#5a5a5a;
-    }
-
-    .catalogMenuCard.is-light{
-      background:#fff;
-      border-color:#dcdcdc;
-    }
-
-    .catalogMenuIconBox{
-      width:34px;
-      height:34px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-
-    .catalogMenuIconBox img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      display:block;
-    }
-
-    .catalogMenuIconPlaceholder{
-      width:24px;
-      height:24px;
-      border:1.6px solid currentColor;
-      opacity:.75;
-    }
-
-    .catalogMenuLabel{
-      width:100%;
-      max-width:100%;
-      font-size:13px;
-      line-height:1.2;
-      letter-spacing:-0.01em;
-      white-space:normal;
-      word-break:break-word;
-      overflow-wrap:anywhere;
-      hyphens:auto;
-      color:#666;
-      text-align:center;
-      justify-self:center;
-    }
-
-    .catalogMenuCard.is-mint .catalogMenuLabel,
-    .catalogMenuCard.is-dark .catalogMenuLabel,
-    .catalogMenuCard.is-mint .catalogMenuIconPlaceholder,
-    .catalogMenuCard.is-dark .catalogMenuIconPlaceholder{
-      color:#fff;
-    }
-
-    .catalogDetailPage{
-      width:min(100%, 440px);
-      margin:0 auto;
-      padding:6px 0 0;
-    }
-
-    .catalogDetailTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:16px;
-      margin:0 0 30px;
-    }
-
-    .catalogDetailTitle{
-      margin:0;
-      font-size:20px;
-      line-height:1.25;
-      font-weight:700;
-      color:#222;
-      letter-spacing:-0.03em;
-    }
-
-    .catalogDetailSub{
-      flex:0 0 auto;
-      padding-top:4px;
-      font-size:12px;
-      font-weight:500;
-      color:#4f4f4f;
-      white-space:nowrap;
-    }
-
-    .catalogDetailFields{
-      display:grid;
-      grid-template-columns:138px minmax(0, 1fr);
-      gap:16px;
-      margin-bottom:20px;
-    }
-
-    .catalogSelectWrap{
-      position:relative;
-    }
-
-    .catalogSelect{
-      width:100%;
-      height:44px;
-      border:1px solid #dcdcdc;
-      border-radius:0;
-      background:#fff;
-      padding:0 42px 0 18px;
-      font-size:14px;
-      font-weight:500;
-      color:#444;
-      outline:none;
-      appearance:none;
-      -webkit-appearance:none;
-      cursor:pointer;
-    }
-
-    .catalogSelectArrow{
-      position:absolute;
-      right:16px;
-      top:50%;
-      transform:translateY(-52%);
-      pointer-events:none;
-      font-size:14px;
-      color:#555;
-    }
-
-    .catalogStockBox{
-      border:1px solid #dcdcdc;
-      background:#fff;
-      margin-bottom:56px;
-    }
-
-    .catalogStockRow{
-      display:grid;
-      grid-template-columns:145px minmax(0, 1fr);
-      min-height:54px;
-      align-items:center;
-    }
-
-    .catalogStockLabel,
-    .catalogStockValue{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:54px;
-      font-size:14px;
-      color:#222;
-      font-weight:600;
-    }
-
-    .catalogStockValue{
-      border-left:1px solid #dcdcdc;
-      font-size:16px;
-      font-weight:700;
-    }
-
-    .catalogDetailAction{
-      margin-top:0;
-    }
-
-    .catalogDetailSubmit{
-      width:100%;
-      height:62px;
-      border:0;
-      border-radius:0;
-      background:#84cdc9;
-      color:#fff;
-      font-size:17px;
-      font-weight:700;
-      cursor:pointer;
-    }
-
-    .catalogDetailSubmit:hover{
-      opacity:.92;
-    }
 
     .secHead{
       display:flex;
@@ -933,85 +697,6 @@
     .hdate .row2{ display:flex; justify-content:flex-end; gap:6px; margin-top:8px; }
 
     .requestActionWrap{ margin:8px 0 18px; }
-
-    .catalogApplyPage{
-      width:min(100%, 520px);
-      margin:0 auto;
-      padding:0 0 12px;
-    }
-
-    .catalogApplyTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      margin:6px 0 20px;
-    }
-
-    .catalogApplyTitle{
-      margin:0;
-      font-size:20px;
-      font-weight:800;
-      letter-spacing:-0.04em;
-      color:#111;
-      line-height:1.2;
-    }
-
-    .catalogApplySub{
-      flex:0 0 auto;
-      font-size:14px;
-      font-weight:500;
-      color:#444;
-      padding-top:2px;
-      white-space:nowrap;
-    }
-
-    .catalogApplySummary{
-      border:1px solid var(--line);
-      background:#f8f8f8;
-      margin-bottom:16px;
-    }
-
-    .catalogApplySummaryRow{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      min-height:56px;
-    }
-
-    .catalogApplySummaryCell{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:0 10px;
-      font-size:14px;
-      font-weight:600;
-      color:#333;
-      text-align:center;
-    }
-
-    .catalogApplySummaryCell + .catalogApplySummaryCell{
-      border-left:1px solid #d9d9d9;
-    }
-
-    .catalogApplyForm{
-      border:1px solid var(--line);
-      background:#fff;
-      padding:18px 18px 4px;
-      margin-bottom:18px;
-    }
-
-    .catalogApplyBtn{
-      width:100%;
-      height:62px;
-      border:0;
-      background:#84cdc9;
-      color:#fff;
-      font-size:18px;
-      font-weight:700;
-      cursor:pointer;
-    }
-
-    .catalogApplyBtn:hover{ opacity:.92; }
 
     .requestSubmitBtn{
       width:100%;
@@ -1847,25 +1532,6 @@ body{
       margin-bottom:18px;
     }
 
-    .nImgPreviewBox{
-      width:120px;
-      height:120px;
-      margin-top:10px;
-      border:1px solid #e5e5e5;
-      background:#f7f7f7;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .nImgPreviewBox img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
     @media (max-width: 1280px){
       .listGrid{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
       .mainHomeBtns{ grid-template-columns:1fr 1fr 1fr; }
@@ -2172,71 +1838,6 @@ body{
         text-align:center;
       }
 
-      .catalogMenuSection{
-        position:relative;
-        left:50%;
-        width:100vw;
-        margin-left:-50vw;
-        margin-bottom:22px;
-        padding:32px 8px 22px;
-        background:#303235;
-        overflow:hidden;
-      }
-
-      .catalogMenuSection > *{
-        width:min(calc(100% - 28px), 800px);
-        margin:0 auto;
-      }
-
-      .catalogMenuTitle{
-        font-size:16px;
-        font-weight:400;
-        margin-bottom:15px;
-      }
-
-      .catalogMenuGrid{
-        grid-template-columns:repeat(3, minmax(0, 1fr));
-        gap:12px;
-      }
-
-      .catalogMenuCard{
-        min-height:100px;
-        padding:20px 4px 8px;
-        gap:12px;
-      }
-
-      .catalogMenuIconBox{
-        width:30px;
-        height:30px;
-      }
-
-      .catalogMenuIconPlaceholder{
-        width:22px;
-        height:22px;
-      }
-
-      .catalogMenuLabel{
-        font-size:11px;
-        line-height:1.12;
-        letter-spacing:-0.02em;
-        white-space:normal;
-        word-break:break-word;
-        overflow-wrap:anywhere;
-      }
-
-      .catalogDetailPage{ width:100%; }
-      .catalogDetailTop{ margin-bottom:24px; }
-      .catalogDetailTitle{ font-size:17px; }
-      .catalogDetailSub{ font-size:11px; padding-top:3px; }
-      .catalogDetailFields{ grid-template-columns:110px minmax(0, 1fr); gap:12px; margin-bottom:18px; }
-      .catalogSelect{ height:42px; padding:0 36px 0 14px; font-size:13px; }
-      .catalogSelectArrow{ right:12px; font-size:12px; }
-      .catalogStockRow{ grid-template-columns:120px minmax(0, 1fr); min-height:52px; }
-      .catalogStockLabel, .catalogStockValue{ min-height:52px; font-size:13px; }
-      .catalogStockValue{ font-size:15px; }
-      .catalogStockBox{ margin-bottom:42px; }
-      .catalogDetailSubmit{ height:58px; font-size:16px; }
-
       .stockCard{
         padding:12px;
         grid-template-columns:52px minmax(0, 1fr);
@@ -2432,12 +2033,8 @@ body{
         </div>
 
         <div class="field">
-          <label for="nImgFile">이미지 업로드</label>
-          <input id="nImgFile" type="file" accept="image/*" />
-          <div id="nImgFileName" style="margin-top:6px; font-size:12px; color:#666;">선택된 파일 없음</div>
-          <div id="nImgPreviewBox" class="nImgPreviewBox" style="display:none;">
-            <img id="nImgPreview" alt="업로드 미리보기">
-          </div>
+          <label for="nImg">이미지 경로</label>
+          <input id="nImg" placeholder="예) large-paper-bag-front.jpg 또는 images/large-paper-bag-front.jpg" />
         </div>
       </div>
 
@@ -2568,57 +2165,6 @@ body{
     }
 
     const STORAGE_KEY = "warehouse_stock_v1";
-
-    const CATALOG_MENU = [
-      {
-        id: "offline-auction",
-        label: "Offline Auction",
-        theme: "mint",
-        iconImg: "images/아이콘-01.png"
-      },
-      {
-        id: "contemporary-art-auction",
-        label: "Contemporary\nart auction",
-        theme: "dark",
-        iconImg: "images/아이콘-03.png"
-      },
-      {
-        id: "zero-base",
-        label: "ZeroBase",
-        theme: "light",
-        iconImg: "images/아이콘-02.png"
-      }
-    ];
-
-    const CATALOG_PAGE_CONFIG = {
-      "offline-auction": {
-        title: "Offline Auction",
-        subtitle: "메이저경매",
-        yearPlaceholder: "연도",
-        years: ["2026", "2025", "2024"],
-        roundDefault: "190회",
-        rounds: ["190회", "189회", "188회"],
-        currentStock: 10
-      },
-      "contemporary-art-auction": {
-        title: "Contemporary art auction",
-        subtitle: "컨템포러리",
-        yearPlaceholder: "연도",
-        years: ["2026", "2025", "2024"],
-        roundDefault: "1회",
-        rounds: ["1회"],
-        currentStock: 0
-      },
-      "zero-base": {
-        title: "ZeroBase",
-        subtitle: "제로베이스",
-        yearPlaceholder: "연도",
-        years: ["2026", "2025", "2024"],
-        roundDefault: "1회",
-        rounds: ["1회"],
-        currentStock: 0
-      }
-    };
 
     const data = [
       {
@@ -2816,24 +2362,7 @@ const navReload = document.getElementById("navReload");
     const nName = document.getElementById("nName");
     const nSize = document.getElementById("nSize");
     const nBase = document.getElementById("nBase");
-    const nImgFile = document.getElementById("nImgFile");
-    const nImgFileName = document.getElementById("nImgFileName");
-    const nImgPreviewBox = document.getElementById("nImgPreviewBox");
-    const nImgPreview = document.getElementById("nImgPreview");
-
-    nImgFile?.addEventListener("change", () => {
-      const file = nImgFile.files?.[0];
-      nImgFileName.textContent = file ? file.name : "선택된 파일 없음";
-
-      if(file){
-        const previewUrl = URL.createObjectURL(file);
-        nImgPreview.src = previewUrl;
-        nImgPreviewBox.style.display = "flex";
-      }else{
-        nImgPreview.removeAttribute("src");
-        nImgPreviewBox.style.display = "none";
-      }
-    });
+    const nImg = document.getElementById("nImg");
 
     function saveAllLocal(){
       try{
@@ -3029,76 +2558,6 @@ const navReload = document.getElementById("navReload");
           onerror="window.handleImgError(this)"
         >
       `;
-    }
-
-    function renderCatalogMenuIcon(item){
-      if(item?.iconImg){
-        return `<img src="${escapeAttr(item.iconImg)}" alt="">`;
-      }
-      return `<div class="catalogMenuIconPlaceholder"></div>`;
-    }
-
-    function renderCatalogMenu(){
-      return `
-        <div class="catalogMenuSection">
-          <h3 class="catalogMenuTitle">도록</h3>
-          <div class="catalogMenuGrid">
-            ${CATALOG_MENU.map(item => `
-              <button class="catalogMenuCard is-${escapeAttr(item.theme || 'light')}" type="button" data-catalog-open="${escapeAttr(item.id)}">
-                <div class="catalogMenuIconBox"> ${renderCatalogMenuIcon(item)}</div>
-                <div class="catalogMenuLabel">${escapeHtml(item.label || '')}</div>
-              </button>
-            `).join('')}
-          </div>
-        </div>
-      `;
-    }
-
-    function getCatalogApplyStorageKey(catalogId){
-      return `catalog_apply_selection_${catalogId}`;
-    }
-
-    function getCatalogRequestStorageKey(catalogId){
-      return `catalog_request_rows_${catalogId}`;
-    }
-
-    function getCatalogRequests(catalogId){
-      try{
-        const raw = localStorage.getItem(getCatalogRequestStorageKey(catalogId));
-        const parsed = raw ? JSON.parse(raw) : [];
-        return Array.isArray(parsed)
-          ? parsed.map(row => normalizeLog({ ...row, t: "신청" }))
-          : [];
-      }catch(err){
-        console.error("catalog request read 실패:", err);
-        return [];
-      }
-    }
-
-    function saveCatalogRequests(catalogId, rows){
-      try{
-        localStorage.setItem(getCatalogRequestStorageKey(catalogId), JSON.stringify(rows || []));
-      }catch(err){
-        console.error("catalog request save 실패:", err);
-      }
-    }
-
-    function saveCatalogApplySelection(catalogId, payload){
-      try{
-        sessionStorage.setItem(getCatalogApplyStorageKey(catalogId), JSON.stringify(payload || {}));
-      }catch(err){
-        console.error("catalog selection save 실패:", err);
-      }
-    }
-
-    function getCatalogApplySelection(catalogId){
-      try{
-        const raw = sessionStorage.getItem(getCatalogApplyStorageKey(catalogId));
-        return raw ? JSON.parse(raw) : {};
-      }catch(err){
-        console.error("catalog selection read 실패:", err);
-        return {};
-      }
     }
 
     function renderSmartLogo(path, alt=""){
@@ -3417,32 +2876,6 @@ function calcStock(it){
       DB.mode = "synced";
       DB.lastError = "";
       return true;
-    }
-
-    async function uploadItemImage(file, itemId){
-      if(!supabaseClient) throw new Error("supabaseClient not ready");
-      if(!file) return null;
-
-      const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-      const safeExt = ext.replace(/[^a-z0-9]/g, "") || "jpg";
-      const filePath = `items/${itemId}-${Date.now()}.${safeExt}`;
-
-      const { error: uploadError } = await supabaseClient
-        .storage
-        .from("warehouse-item-images")
-        .upload(filePath, file, {
-          cacheControl: "3600",
-          upsert: false
-        });
-
-      if(uploadError) throw uploadError;
-
-      const { data: publicUrlData } = supabaseClient
-        .storage
-        .from("warehouse-item-images")
-        .getPublicUrl(filePath);
-
-      return publicUrlData?.publicUrl || null;
     }
 
     async function saveItemToDB(item, categoryName){
@@ -4019,7 +3452,6 @@ function calcStock(it){
 
       const keyword = (q.value || "").trim().toLowerCase();
       const isStockMode = mode === "list";
-      const showCatalogMenu = !keyword;
 
       const sectionsHtml = data.map((section, sectionIndex) => {
         const filtered = (section.items||[]).filter(it => {
@@ -4125,8 +3557,7 @@ function calcStock(it){
         `;
       }).join("");
 
-      const catalogMenuHtml = showCatalogMenu ? renderCatalogMenu() : "";
-      app.innerHTML = (catalogMenuHtml + sectionsHtml) || `
+      app.innerHTML = sectionsHtml || `
         <div class="paper">
           <div class="paper-head">안내</div>
           <div class="paper-body">등록된 품목이 없습니다.</div>
@@ -4137,6 +3568,7 @@ function calcStock(it){
       if(sectionAddItemBtn){
         sectionAddItemBtn.addEventListener("click", ()=> openItemModal(""));
       }
+
 
       app.querySelectorAll("[data-open]").forEach(el => {
         if(mode === "list") return;
@@ -4150,357 +3582,6 @@ function calcStock(it){
           }
         });
       });
-
-      app.querySelectorAll("[data-catalog-open]").forEach(el => {
-        const go = () => {
-          const catalogId = el.getAttribute("data-catalog-open") || "";
-          if(!catalogId) return;
-          location.hash = `#/request/catalog/${encodeURIComponent(catalogId)}`;
-        };
-        el.addEventListener("click", go);
-        el.addEventListener("keydown", (e) => {
-          if(e.key === "Enter" || e.key === " "){
-            e.preventDefault();
-            go();
-          }
-        });
-      });
-    }
-
-
-    function renderCatalogDetail(catalogId){
-      topbar.style.display = "flex";
-      searchBox.style.display = "none";
-      if(topbarLogo) topbarLogo.classList.remove("show");
-      setTopTitleByMode("request");
-      setBodyMode("request");
-
-      const config = CATALOG_PAGE_CONFIG[catalogId];
-      if(!config){
-        app.innerHTML = `
-          <div class="paper">
-            <div class="paper-head">알림</div>
-            <div class="paper-body">페이지를 찾을 수 없습니다.</div>
-          </div>
-        `;
-        return;
-      }
-
-      const allDepts = [
-        "경영기획팀","인사팀","관재팀","재무팀","서비스운영팀","아카이브팀","대외협력팀","디자인팀","영업팀","브랜드기획팀","고객관리팀","작품관리팀","VIP사업기획팀","웹서비스개발팀"
-      ];
-
-      let reqDateFilter = "";
-      let reqDeptFilter = "전체";
-      let reqStatusFilter = "전체";
-      let selectedRequestKeys = new Set();
-
-      const yearOptions = [
-        `<option value="">${escapeHtml(config.yearPlaceholder || "연도")}</option>`,
-        ...(config.years || []).map(year => `<option value="${escapeAttr(year)}">${escapeHtml(year)}</option>`)
-      ].join("");
-
-      const roundOptions = (config.rounds || []).map(round => {
-        const selected = round === config.roundDefault ? "selected" : "";
-        return `<option value="${escapeAttr(round)}" ${selected}>${escapeHtml(round)}</option>`;
-      }).join("");
-
-      function getRequestRows(){
-        let rows = [...getCatalogRequests(catalogId)];
-        if(reqDateFilter) rows = rows.filter(r => toISODateLike(r.d) === reqDateFilter);
-        if(reqDeptFilter !== "전체") rows = rows.filter(r => (r.dept || "-") === reqDeptFilter);
-        if(reqStatusFilter === "전체") {
-          rows = rows.filter(r => (r.status || "pending") !== "approved");
-        } else {
-          rows = rows.filter(r => (r.status || "pending") === reqStatusFilter);
-        }
-        return sortByLatestDateAndKey(rows);
-      }
-
-      function tableRows(rows){
-        if(rows.length === 0){
-          return `<div class="logEmpty">내역이 없습니다.</div>`;
-        }
-        return rows.map(r => {
-          const key = r.__key;
-          const selected = selectedRequestKeys.has(key);
-          const statusText = requestStatusLabel(r.status);
-          const statusClassName = requestStatusClass(r.status);
-          return `
-            <div class="logRow clickable ${selected ? "selected" : ""}" data-row="${escapeAttr(key)}" data-kind="request">
-              <div class="logDate">${escapeHtml(formatKRDate(r.d))}</div>
-              <div class="logType"><span class="typeBadge request">${escapeHtml(r.t || "신청")}</span></div>
-              <div class="logDept">${escapeHtml(r.dept || "-")}</div>
-              <div class="logType"><span class="typeBadge ${statusClassName}">${escapeHtml(statusText)}</span></div>
-              <div class="logPerson">${escapeHtml(r.person || "-")}</div>
-              <div class="logQty">${Number(r.qty || 0).toLocaleString()}개</div>
-            </div>
-          `;
-        }).join("");
-      }
-
-      function render(){
-        const requestRows = getRequestRows();
-
-        app.innerHTML = `
-          <div class="catalogDetailPage">
-            <div class="catalogDetailTop">
-              <h2 class="catalogDetailTitle">${escapeHtml(config.title || "")}</h2>
-              <div class="catalogDetailSub">${escapeHtml(config.subtitle || "")}</div>
-            </div>
-
-            <div class="catalogDetailFields">
-              <div class="catalogSelectWrap">
-                <select class="catalogSelect" id="catalogYearSelect">
-                  ${yearOptions}
-                </select>
-                <span class="catalogSelectArrow">▼</span>
-              </div>
-              <div class="catalogSelectWrap">
-                <select class="catalogSelect" id="catalogRoundSelect">
-                  ${roundOptions}
-                </select>
-                <span class="catalogSelectArrow">▼</span>
-              </div>
-            </div>
-
-            <div class="catalogStockBox">
-              <div class="catalogStockRow">
-                <div class="catalogStockLabel">현재 재고</div>
-                <div class="catalogStockValue">${Number(config.currentStock || 0).toLocaleString()}개</div>
-              </div>
-            </div>
-
-            <div class="catalogDetailAction">
-              <button class="catalogDetailSubmit" id="catalogRequestSubmitBtn" type="button">출고 신청하기</button>
-            </div>
-
-            <div class="detailSectionBlock" style="margin-top:28px;">
-              <div class="boxTitleRow detailSectionHead">
-                <p class="boxTitle">출고 신청 내역</p>
-                <div class="requestAdminActions">
-                  <button class="selDelBtn" id="catalogBulkDeleteRequests" type="button">삭제</button>
-                </div>
-              </div>
-              <div class="logBox requestLogBox requestTable">
-                <div class="logMinWidth">
-                  <div class="logHead subtleHead">
-                    <div class="logHeadCell">
-                      <input type="date" id="catalogReqDateFilter" class="headerFilterDate" value="${reqDateFilter}">
-                    </div>
-                    <div class="logHeadCell"><div class="logHeadLabel">구분</div></div>
-                    <div class="logHeadCell">
-                      <select id="catalogReqDeptSel" class="headerFilterSelect">
-                        <option value="전체" ${reqDeptFilter === "전체" ? "selected" : ""}>전체 부서</option>
-                        ${allDepts.map(d => `<option value="${escapeAttr(d)}" ${reqDeptFilter === d ? "selected" : ""}>${escapeHtml(d)}</option>`).join("")}
-                      </select>
-                    </div>
-                    <div class="logHeadCell">
-                      <select id="catalogReqStatusSel" class="headerFilterSelect">
-                        <option value="전체" ${reqStatusFilter === "전체" ? "selected" : ""}>전체 상태</option>
-                        <option value="pending" ${reqStatusFilter === "pending" ? "selected" : ""}>신청</option>
-                        <option value="approved" ${reqStatusFilter === "approved" ? "selected" : ""}>승인</option>
-                        <option value="rejected" ${reqStatusFilter === "rejected" ? "selected" : ""}>반려</option>
-                      </select>
-                    </div>
-                    <div class="logHeadCell"><div class="logHeadLabel">담당자</div></div>
-                    <div class="logHeadCell"><div class="logHeadLabel">수량</div></div>
-                  </div>
-                  ${tableRows(requestRows)}
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-
-        const submitBtn = app.querySelector("#catalogRequestSubmitBtn");
-        if(submitBtn){
-          submitBtn.addEventListener("click", ()=>{
-            const year = app.querySelector("#catalogYearSelect")?.value || "";
-            const round = app.querySelector("#catalogRoundSelect")?.value || "";
-            if(!year){
-              alert("연도를 선택해주세요.");
-              return;
-            }
-            saveCatalogApplySelection(catalogId, {
-              year,
-              round,
-              currentStock: Number(config.currentStock || 0)
-            });
-            location.hash = `#/request/catalog/${encodeURIComponent(catalogId)}/apply`;
-          });
-        }
-
-        const reqDateFilterEl = app.querySelector("#catalogReqDateFilter");
-        const reqDeptSel = app.querySelector("#catalogReqDeptSel");
-        const reqStatusSel = app.querySelector("#catalogReqStatusSel");
-        const bulkDeleteBtn = app.querySelector("#catalogBulkDeleteRequests");
-
-        if(reqDateFilterEl){
-          reqDateFilterEl.addEventListener("change", (e)=>{
-            reqDateFilter = e.target.value || "";
-            render();
-          });
-        }
-        if(reqDeptSel){
-          reqDeptSel.addEventListener("change", (e)=>{
-            reqDeptFilter = e.target.value || "전체";
-            render();
-          });
-        }
-        if(reqStatusSel){
-          reqStatusSel.addEventListener("change", (e)=>{
-            reqStatusFilter = e.target.value || "전체";
-            render();
-          });
-        }
-
-        app.querySelectorAll("[data-row]").forEach(row => {
-          row.addEventListener("click", ()=>{
-            const key = row.dataset.row;
-            if(selectedRequestKeys.has(key)) selectedRequestKeys.delete(key);
-            else selectedRequestKeys.add(key);
-            render();
-          });
-        });
-
-        if(bulkDeleteBtn){
-          bulkDeleteBtn.addEventListener("click", ()=>{
-            if(selectedRequestKeys.size === 0){
-              alert("삭제할 신청 내역을 선택해주세요.");
-              return;
-            }
-            const ok = confirm("선택한 신청 내역을 삭제하시겠습니까?");
-            if(!ok) return;
-            const nextRows = getCatalogRequests(catalogId).filter(r => !selectedRequestKeys.has(r.__key));
-            saveCatalogRequests(catalogId, nextRows);
-            selectedRequestKeys.clear();
-            render();
-          });
-        }
-      }
-
-      render();
-    }
-
-    function renderCatalogApplyPage(catalogId){
-      topbar.style.display = "flex";
-      searchBox.style.display = "none";
-      if(topbarLogo) topbarLogo.classList.remove("show");
-      setTopTitleByMode("request");
-      setBodyMode("request");
-
-      const config = CATALOG_PAGE_CONFIG[catalogId];
-      if(!config){
-        app.innerHTML = `
-          <div class="paper">
-            <div class="paper-head">알림</div>
-            <div class="paper-body">페이지를 찾을 수 없습니다.</div>
-          </div>
-        `;
-        return;
-      }
-
-      const saved = getCatalogApplySelection(catalogId);
-      const selectedYear = saved?.year || "";
-      const selectedRound = saved?.round || config.roundDefault || "";
-      const currentStock = Number(saved?.currentStock ?? config.currentStock ?? 0);
-
-      const allDepts = [
-        "경영기획팀","인사팀","관재팀","재무팀","서비스운영팀","아카이브팀","대외협력팀","디자인팀","영업팀","브랜드기획팀","고객관리팀","작품관리팀","VIP사업기획팀","웹서비스개발팀"
-      ];
-
-      app.innerHTML = `
-        <div class="catalogApplyPage">
-          <div class="catalogApplyTop">
-            <h2 class="catalogApplyTitle">${escapeHtml(config.title || "")}</h2>
-            <div class="catalogApplySub">${escapeHtml(config.subtitle || "")}</div>
-          </div>
-
-          <div class="catalogApplySummary">
-            <div class="catalogApplySummaryRow">
-              <div class="catalogApplySummaryCell">${escapeHtml(selectedYear || "연도 미선택")}</div>
-              <div class="catalogApplySummaryCell">${escapeHtml(selectedRound || "회차 미선택")}</div>
-            </div>
-          </div>
-
-          <div class="catalogApplySummary" style="margin-bottom:18px;">
-            <div class="catalogApplySummaryRow">
-              <div class="catalogApplySummaryCell">현재 재고</div>
-              <div class="catalogApplySummaryCell">${currentStock.toLocaleString()}개</div>
-            </div>
-          </div>
-
-          <div class="catalogApplyForm">
-            <div class="field">
-              <label for="catalogApplyDate">날짜</label>
-              <input type="date" id="catalogApplyDate">
-            </div>
-            <div class="field">
-              <label for="catalogApplyDept">부서</label>
-              <select id="catalogApplyDept">
-                ${allDepts.map(d => `<option value="${escapeAttr(d)}">${escapeHtml(d)}</option>`).join("")}
-              </select>
-            </div>
-            <div class="field">
-              <label for="catalogApplyQty">수량</label>
-              <input id="catalogApplyQty" inputmode="numeric" placeholder="예) 10" />
-            </div>
-            <div class="field">
-              <label for="catalogApplyPerson">담당자</label>
-              <input id="catalogApplyPerson" placeholder="담당자명을 입력해주세요." />
-            </div>
-          </div>
-
-          <button class="catalogApplyBtn" id="catalogApplySubmitBtn" type="button">출고 신청하기</button>
-        </div>
-      `;
-
-      const dateInput = app.querySelector("#catalogApplyDate");
-      if(dateInput){
-        dateInput.value = new Date().toISOString().slice(0, 10);
-      }
-
-      const submitBtn = app.querySelector("#catalogApplySubmitBtn");
-      if(submitBtn){
-        submitBtn.addEventListener("click", ()=>{
-          const date = app.querySelector("#catalogApplyDate")?.value || "";
-          const dept = app.querySelector("#catalogApplyDept")?.value || "";
-          const qty = Number(app.querySelector("#catalogApplyQty")?.value || 0);
-          const person = (app.querySelector("#catalogApplyPerson")?.value || "").trim();
-
-          if(!selectedYear){
-            alert("연도 선택 후 다시 진행해주세요.");
-            location.hash = `#/request/catalog/${encodeURIComponent(catalogId)}`;
-            return;
-          }
-          if(!date || !dept || !qty || !person){
-            alert("모든 항목을 입력해주세요.");
-            return;
-          }
-          if(!Number.isFinite(qty) || qty <= 0){
-            alert("수량은 0보다 큰 숫자로 입력해주세요.");
-            return;
-          }
-
-          const rows = getCatalogRequests(catalogId);
-          const row = normalizeLog({
-            d: date,
-            t: "신청",
-            dept,
-            person,
-            qty,
-            status: "pending",
-            year: selectedYear,
-            round: selectedRound,
-            currentStock
-          });
-          rows.push(row);
-          saveCatalogRequests(catalogId, rows);
-          alert("출고 신청이 접수되었습니다.");
-          location.hash = `#/request/catalog/${encodeURIComponent(catalogId)}`;
-        });
-      }
     }
 
     function renderDetail(id, mode = "request"){
@@ -5195,8 +4276,6 @@ function calcStock(it){
       }
 
       const requestItem = hash.match(/^#\/request\/item\/(.+)$/);
-      const requestCatalogApply = hash.match(/^#\/request\/catalog\/([^/]+)\/apply$/);
-      const requestCatalog = hash.match(/^#\/request\/catalog\/([^/]+)$/);
       const adminItem = hash.match(/^#\/admin\/item\/(.+)$/);
       const listItem = hash.match(/^#\/list\/item\/(.+)$/);
 
@@ -5210,10 +4289,6 @@ function calcStock(it){
         await renderMainHome();
       }else if(hash === "#/request"){
         renderHome("request");
-      }else if(requestCatalogApply){
-        renderCatalogApplyPage(decodeURIComponent(requestCatalogApply[1]));
-      }else if(requestCatalog){
-        renderCatalogDetail(decodeURIComponent(requestCatalog[1]));
       }else if(hash === "#/list"){
         renderHome("list");
       }else if(hash === "#/admin"){
@@ -5275,7 +4350,7 @@ function calcStock(it){
       const name = (nName.value || "").trim();
       const size = (nSize.value || "").trim();
       const base = Number(String(nBase.value || "").replace(/,/g,""));
-      const imageFile = nImgFile?.files?.[0] || null;
+      const img  = (nImg.value || "").trim();
 
       if(!category){ alert("카테고리를 입력해주세요."); return; }
       if(!name){ alert("품목명을 입력해주세요."); return; }
@@ -5291,25 +4366,13 @@ function calcStock(it){
         id = `${baseId}-${n++}`;
       }
 
-      let uploadedImageUrl = null;
-
-      if(imageFile){
-        try{
-          uploadedImageUrl = await uploadItemImage(imageFile, id);
-        }catch(err){
-          console.error(err);
-          alert("이미지 업로드에 실패했습니다.\nStorage 버킷/권한 설정을 확인해주세요.");
-          return;
-        }
-      }
-
       const newItem = {
         id,
         name,
         size,
         baseStock: base,
-        img: uploadedImageUrl || null,
-        images: [uploadedImageUrl || null, null],
+        img: img || null,
+        images: [img || null, null],
         logs: [],
         requests: []
       };
@@ -5332,10 +4395,7 @@ function calcStock(it){
       nName.value = "";
       nSize.value = "";
       nBase.value = "";
-      if(nImgFile) nImgFile.value = "";
-      if(nImgFileName) nImgFileName.textContent = "선택된 파일 없음";
-      if(nImgPreview) nImgPreview.removeAttribute("src");
-      if(nImgPreviewBox) nImgPreviewBox.style.display = "none";
+      nImg.value = "";
 
       closeItemModal();
 
